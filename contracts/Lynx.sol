@@ -51,7 +51,7 @@ contract Lynx {
     lastDeclarationPeriod = now;
   }
 
-  function createAsset() external payable isEntryPeriod countSender {
+  function createAsset() external payable isEntryPeriod countSender return(uint assetIndex) {
     require(msg.value > 0, "Must declare value");
     uint durationMultiplier = 1000 * epochPeriod / (lastDeclarationPeriod - now);
     Asset memory newAsset = Asset({ // Note that we multipled the duration multiplier by a 1000 already
