@@ -51,7 +51,13 @@ contract Lynx {
     lastDeclarationPeriod = now;
   }
 
-  function createAsset() external payable isEntryPeriod countSender returns(uint assetIndex) {
+  function createAsset()
+    external
+    payable
+    isEntryPeriod
+    countSender
+    returns (uint assetIndex)
+  {
     require(msg.value > 0, "Must declare value");
     uint durationMultiplier = 1000 * epochPeriod / (lastDeclarationPeriod - now);
     Asset memory newAsset = Asset({ // Note that we multipled the duration multiplier by a 1000 already
@@ -64,7 +70,12 @@ contract Lynx {
     userToAssets[msg.sender].push(assetIndex);
   }
 
-  function setAssetValue(uint id) external payable isDeclarationPeriod countSender{
+  function setAssetValue(uint id)
+    external
+    payable
+    isDeclarationPeriod
+    countSender
+  {
     require(assets[id].owner == msg.sender, "Sender not asset owner");
     require(msg.value > 0, "No tax sent");
     // Check if user hasn't claimed dividends yet
@@ -119,25 +130,25 @@ contract Lynx {
 
   }
 
-  function enterDeclerationPeriod() external {
-    require(
-      now > lastDeclarationPeriod + epochPeriod && !declarationPeriod,
-      "Can't enter declarationPeriod"
-    );
+  function enterDeclarationPeriod() external {
+    // require(
+    //   now > lastDeclarationPeriod + epochPeriod && !declarationPeriod,
+    //   "Can't enter declarationPeriod"
+    // );
     declarationPeriod = true;
     lastDeclarationPeriod += epochPeriod;
     totalTaxCollected = address(this).balance;
   }
 
-  function exitDeclerationPeriod() external {
+  function exitDeclarationPeriod() external {
     require(
       now > lastDeclarationPeriod + declarationDuration && declarationPeriod
     );
     declarationPeriod = false;
   }
 
-  function collectDivdend(address payable user) public {
-    require(users[msg.sender] == lastDeclarationPeriod - epochPeriod);
+  function collectDivdend(address payable user) public isDeclarationPeriod {
+    //require(users[msg.sender] == lastDeclarationPeriod - epochPeriod);
     users[msg.sender] = 0;
     user.transfer(totalTaxCollected / totalEligbleUserAmount);
   }
