@@ -1,0 +1,29 @@
+{
+  "name": "lynx",
+  "version": "1.0.0",
+  "description": "A georgist tax implementation",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretty-all": "prettier --write contracts/*.sol",
+    "pretty": "prettier --write"
+  },
+  "author": "svechinsky",
+  "license": "ISC",
+  "dependencies": {
+    "openzeppelin-solidity": "^2.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "eth-gas-reporter": "^0.1.12",
+    "prettier": "^1.16.4",
+    "prettier-plugin-solidity": "^1.0.0-alpha.18",
+    "solhint": "^2.0.0",
+    "solhint-plugin-prettier": "0.0.2",
+    "truffle-cost": "^1.0.1"
+  }
+}
